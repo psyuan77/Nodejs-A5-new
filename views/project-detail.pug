@@ -1,0 +1,24 @@
+extends static
+
+block content
+  main
+    .project-detail-container
+      h1#project-title= project.title
+
+      if user && user.role === 'admin'
+        .project-actions
+          a.edit-btn(href=`/projects/${project._id}/edit`) Edit Project
+          form(method='POST' action=`/projects/${project._id}/delete` onsubmit='return confirm("Are you sure you want to delete this project?")')
+            button.delete-btn(type='submit') Delete Project
+
+      if project.screenshot
+        img(src=project.screenshot alt=project.title)
+      
+      ul#project-tech
+        each tech in project.tech
+          li= tech
+          
+      p#project-summary= project.summary
+      p#project-description= project.description
+
+      a.back-btn(href="/projects") Back to Projects

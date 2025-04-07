@@ -1,0 +1,17 @@
+extends static
+
+block content
+  main.auth-container
+    .auth-form
+      h2 Login
+      if error
+        p.error= error
+      form(action="/login" method="POST")
+        .form-group
+          label(for="username") Username
+          input#username(type="text" name="username" required)
+        .form-group
+          label(for="password") Password
+          input#password(type="password" name="password" required)
+        button.btn.primary(type="submit") Login
+      

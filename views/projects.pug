@@ -1,0 +1,30 @@
+extends static
+
+block content
+  main
+    .project-header
+      h1 My Projects
+      if user && user.role === 'admin'
+        a.edit-btn(href="/projects/create") Create New Project
+      input(type="text" id="search" placeholder="Search projects...")
+
+    .project-card-container
+      each project in projects
+        .project-card(data-title=project.title data-summary=project.summary)
+          if project.screenshot
+            img(src=project.screenshot alt=project.title)
+          else
+            .no-image
+              span No Image Available
+          h2.project-title= project.title
+          p.project-summary= project.summary
+          ul
+            each tech in project.tech
+              li= tech
+          .project-actions
+            a(href=`/projects/${project._id}`) View Details
+      else
+        .no-projects
+          p No projects found
+    
+    script(src="/scripts/script.js")

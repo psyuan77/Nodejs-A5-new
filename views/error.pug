@@ -1,0 +1,10 @@
+extends static
+
+block content
+  main.error-container
+    .error-content
+      h1= error.status || 500
+      h2= message
+      p= error.stack
+      .error-actions
+        a.btn.primary(href="/") Return Home

@@ -1,0 +1,33 @@
+extends static
+
+block content
+  main
+    .project-form-container
+      h1= title
+      form(method='POST' enctype='multipart/form-data' action=project ? `/projects/${project._id}/update` : '/projects')
+        .form-group
+          label(for='title') Title
+          input#title(type='text' name='title' value=project ? project.title : '' required)
+        
+        .form-group
+          label(for='summary') Summary
+          textarea#summary(name='summary' rows='2' required)= project ? project.summary : ''
+        
+        .form-group
+          label(for='tech') Technologies (comma-separated)
+          input#tech(type='text' name='tech' value=project ? project.tech.join(', ') : '' required)
+        
+        .form-group
+          label(for='description') Full Description
+          textarea#description(name='description' rows='5' required)= project ? project.description : ''
+        
+        .form-group
+          label(for='screenshot') Screenshot
+          input#screenshot(type='file' name='screenshot' accept='image/*')
+          if project && project.screenshot
+            .preview-image
+              img(src=project.screenshot alt=project.title)
+        
+        .form-actions
+          button.submit-btn(type='submit')= project ? 'Update Project' : 'Create Project'
+          a.cancel-btn(href='/projects') Cancel

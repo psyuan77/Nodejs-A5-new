@@ -1,0 +1,12 @@
+header
+  nav
+    ul.main-nav
+      each page in viewData.pages
+        if page.name !== 'Contact' || user
+          li: a(href=page.path)= page.name
+      if user
+        li: span.welcome Welcome, #{user.username}
+        li: a(href="/logout") Logout
+      else
+        li: a(href="/login") Login
+        li: a(href="/register") Register

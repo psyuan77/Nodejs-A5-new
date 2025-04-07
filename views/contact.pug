@@ -1,0 +1,20 @@
+extends static
+
+block content
+  main.contact-container
+    h2 Contact Form
+    if error
+      .alert.error= error
+    if success
+      .alert.success Your message has been sent successfully!
+    form(action="/contact" method="POST")
+      .form-group
+        label(for="name") Name
+        input#name(type="text" name="name" required value=formData ? formData.name : '')
+      .form-group
+        label(for="email") Email
+        input#email(type="email" name="email" required value=formData ? formData.email : '')
+      .form-group
+        label(for="message") Message
+        textarea#message(name="message" rows="5" required)= formData ? formData.message : ''
+      button.btn.primary(type="submit") Send Message
