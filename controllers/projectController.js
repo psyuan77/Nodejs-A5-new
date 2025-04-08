@@ -22,7 +22,7 @@ exports.Project = async (req, res) => {
     const projectId = req.params.id;
     let project = await projectOps.getProjectById(projectId);
     let projects = await projectOps.getAllProjects();
-    
+
     if (!project) {
       return res.status(404).render('error', { error: 'Project not found' });
     }
@@ -30,12 +30,13 @@ exports.Project = async (req, res) => {
     if (req.query.format === 'json') {
       return res.json(project);
     }
-    
+
     res.render('project-detail', {
       title: project.title,
       project,
       projects,
-      projectId
+      projectId,
+      user: req.user,
     });
   } catch (error) {
     res.status(500).render('error', { error: 'Failed to load project' });
@@ -53,9 +54,9 @@ exports.CreateProject = async (req, res) => {
     const projectData = {
       title: req.body.title,
       summary: req.body.summary,
-      tech: req.body.tech.split(',').map(t => t.trim()),
+      tech: req.body.tech.split(',').map((t) => t.trim()),
       description: req.body.description,
-      screenshot: req.file ? `/uploads/${req.file.filename}` : null
+      screenshot: req.file ? `/uploads/${req.file.filename}` : null,
     };
 
     await projectOps.addProject(projectData);
@@ -83,7 +84,7 @@ exports.UpdateProject = async (req, res) => {
   try {
     const projectId = req.params.id;
     const oldProject = await projectOps.getProjectById(projectId);
-    
+
     if (!oldProject) {
       return res.status(404).render('error', { error: 'Project not found' });
     }
@@ -91,8 +92,8 @@ exports.UpdateProject = async (req, res) => {
     const projectData = {
       title: req.body.title,
       summary: req.body.summary,
-      tech: req.body.tech.split(',').map(t => t.trim()),
-      description: req.body.description
+      tech: req.body.tech.split(',').map((t) => t.trim()),
+      description: req.body.description,
     };
 
     // Handle image upload
@@ -117,7 +118,7 @@ exports.DeleteProject = async (req, res) => {
   try {
     const projectId = req.params.id;
     const project = await projectOps.getProjectById(projectId);
-    
+
     if (!project) {
       return res.status(404).render('error', { error: 'Project not found' });
     }

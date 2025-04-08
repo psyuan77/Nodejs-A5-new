@@ -4,7 +4,7 @@ block content
   main
     .project-header
       h1 My Projects
-      if user && user.role === 'admin'
+      if user && user.roles.includes('admin')
         a.edit-btn(href="/projects/create") Create New Project
       input(type="text" id="search" placeholder="Search projects...")
 

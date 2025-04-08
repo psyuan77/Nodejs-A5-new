@@ -5,7 +5,7 @@ block content
     .project-detail-container
       h1#project-title= project.title
 
-      if user && user.role === 'admin'
+      if user && user.roles.includes('admin')
         .project-actions
           a.edit-btn(href=`/projects/${project._id}/edit`) Edit Project
           form(method='POST' action=`/projects/${project._id}/delete` onsubmit='return confirm("Are you sure you want to delete this project?")')

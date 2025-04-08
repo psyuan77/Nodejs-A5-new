@@ -6,7 +6,7 @@ const isAuthenticated = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  if (req.isAuthenticated() && req.user.role === 'admin') {
+  if (req.isAuthenticated() && req.user.roles.includes('admin')) {
     return next();
   }
   res.status(403).render('error', {
